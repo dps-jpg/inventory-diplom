@@ -5,3 +5,12 @@
  * `contextIsolation` is turned on. Use the contextBridge API in `preload.js`
  * to expose Node.js functionality from the main process.
  */
+
+document.getElementById('choose-path').addEventListener('click', (event) => {
+    event.preventDefault()
+    window.postMessage({
+        type: 'select-dirs',
+    })
+})
+
+

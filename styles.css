@@ -1,3 +1,83 @@
-/* styles.css */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    padding: 20px;
+    height: 350px;
+}
+.content {
+    height: 160px;
+}
 
-/* Add styles here to customize the appearance of your app */
+/* inputs */
+.choose-file-wrapper {
+    display: flex;
+}
+#path-text {
+    width: 450px;
+}
+#choose-path {
+    visibility: hidden;
+    width: 0;
+}
+.choose-file-label {
+    border: 1px solid black;
+    border-radius: 2px;
+    cursor: pointer;
+    margin-left: 20px;
+    padding: 0 10px;
+}
+.path-error-text, .file-name-error-text {
+    color: red;
+    height: 20px;
+}
+#exel-name {
+    width: 450px;
+}
+
+/* checkboxes */
+.checkboxes {
+    margin-top: 16px;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 5px;
+    width: fit-content;
+}
+.checkbox-wrapper {
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* progress */
+.progress-wrapper {
+    display: none;
+}
+.progress-percents {
+    color: black;
+    font-size: 16px;
+    line-height: 24px;
+}
+.animated-progress {
+    width: 450px;
+    height: 20px;
+    border-radius: 5px;
+    border: 1px solid black;
+    overflow: hidden;
+    position: relative;
+}
+
+.animated-progress span {
+    height: 100%;
+    display: block;
+    width: 0%;
+    position: absolute;
+    background-color: blue;
+}
+
+.footer {
+    display: flex;
+    justify-content: flex-end;
+}

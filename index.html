@@ -5,15 +5,61 @@
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
     <link href="./styles.css" rel="stylesheet">
-    <title>Hello World!</title>
+    <title>inventory</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
+    <div class="container">
+      <p>Select disk or directory</p>
+      <div class="choose-file-wrapper">
+        <input type="text" disabled id="path-text">
+        <label for="choose-path" class="choose-file-label">select</label>
+        <input type="button" id="choose-path">
+      </div>
+      <div class="path-error-text"></div>
 
-    <!-- You can also require other files to run in this process -->
-    <script src="./renderer.js"></script>
+      <p>enter a name for the generate file without extension(example: "my file")</p>
+      <input type="text" id="exel-name">
+      <div class="file-name-error-text"></div>
+      <div class="content">
+        <div class="checkboxes">
+          <div class="checkbox-wrapper">
+            <label for="size-checkbox">Size</label>
+            <input id="size-checkbox" type="checkbox" checked>
+          </div>
+          <div class="checkbox-wrapper">
+            <label for="MD5-checkbox">MD5 hash</label>
+            <input id="MD5-checkbox" type="checkbox" checked>
+          </div>
+          <div class="checkbox-wrapper">
+            <label for="SHA-checkbox">SHA hash</label>
+            <input id="SHA-checkbox" type="checkbox" checked>
+          </div>
+          <div class="checkbox-wrapper">
+            <label for="create-date-checkbox">Create-date</label>
+            <input id="create-date-checkbox" type="checkbox" checked>
+          </div>
+          <div class="checkbox-wrapper">
+            <label for="modify-date-checkbox">Modify-date</label>
+            <input id="modify-date-checkbox" type="checkbox" checked>
+          </div>
+          <div class="checkbox-wrapper">
+            <label for="access-date-checkbox">Access-date</label>
+            <input id="access-date-checkbox" type="checkbox" checked>
+          </div>
+        </div>
+        <div class="progress-wrapper">
+          <p class="progress-percents">0 %</p>
+          <div class="animated-progress">
+            <span data-progress="45"></span>
+          </div>
+        </div>
+
+      </div>
+      <footer class="footer">
+        <button id="button">Generate</button>
+      </footer>
+    </div>
+<!--    <script src="./renderer.js"></script>-->
+    <script src="./generateExel.js"></script>
   </body>
 </html>

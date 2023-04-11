@@ -1,0 +1,6 @@
+directories:
+  output: dist
+  buildResources: build
+appId: com.Inventory.app
+files: []
+electronVersion: 23.2.1

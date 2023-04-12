@@ -2,6 +2,7 @@ const fs = require('fs');
 const excel = require('excel4node');
 const crypto = require('crypto');
 const nodePath = require('path');
+const homedir = require('os').homedir();
 
 const workBook = new excel.Workbook();
 const workSheet = workBook.addWorksheet("Inventorization", {});
@@ -200,7 +201,8 @@ function writeWorkBook () {
     columnsTitles.includes("ModifyDate") && workSheet.column(columnTitlesMap["ModifyDate"]).setWidth(15);
     columnsTitles.includes("AccessDate") && workSheet.column(columnTitlesMap["AccessDate"]).setWidth(15);
     columnsTitles.includes("CreateDate") && workSheet.column(columnTitlesMap["CreateDate"]).setWidth(15);
-    workBook.write(`${fileNameTextInput.value.trim()}.xlsx`, (err, stats) => {
+    console.log(nodePath.join(homedir, "Desktop", `${fileNameTextInput.value.trim()}.xlsx`));
+    workBook.write(nodePath.join(homedir, "Desktop", `${fileNameTextInput.value.trim()}.xlsx`), (err, stats) => {
         endGenerate();
         if (err) {
             console.log(err);

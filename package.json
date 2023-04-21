@@ -4,7 +4,8 @@
   "description": "Inventory app",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build:mwl": "electron-builder -mwl"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [

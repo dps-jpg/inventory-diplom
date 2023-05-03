@@ -25,6 +25,6 @@
     "electron-builder": "^23.6.0"
   },
   "dependencies": {
-    "excel4node": "^1.8.1"
+    "excel4node": "^1.8.2"
   }
 }

@@ -90,8 +90,9 @@ const generateExel = () => {
 generateButton.addEventListener("click", generateExel);
 
 // Exel
-const columnsTitles = ["№", "type", "dir or filename", "path", "extensions"]
-const columnTitlesMap = {};
+const initialColumnsTitles = ["№", "type", "dir or filename", "path", "extensions"]
+let columnsTitles = [...initialColumnsTitles];
+let columnTitlesMap = {};
 
 const titlesStyle = workBook.createStyle({
     fill: {
@@ -115,6 +116,25 @@ const dirStyles = workBook.createStyle({
     },
 });
 const emptyStyles = workBook.createStyle({});
+
+const addZero = (num) => {
+    const str = num.toString();
+    if (str.length === 1) {
+        return `0${num}`;
+    }
+    return num;
+}
+
+const dateToFormat = (date) => {
+    const seconds = addZero(date.getSeconds());
+    const minutes = addZero(date.getMinutes());
+    const hours = addZero(date.getHours());
+    const day = addZero(date.getDate());
+    const month = addZero(date.getMonth() + 1);
+    const year = addZero(date.getFullYear());
+    return `${hours}:${minutes}:${seconds}  ${day}/${month}/${year}`;
+
+}
 
 function writeColumnTitles () {
     sizeCheckbox.checked && columnsTitles.push("size");
@@ -155,7 +175,7 @@ function writeCell (path) {
         workSheet.cell(currentRowNumber + 1, columnTitlesMap["path"]).string(nodePath.dirname(path)).style(isDir ? dirStyles : emptyStyles);
 
         columnsTitles.includes("size") && workSheet.cell(currentRowNumber + 1, columnTitlesMap["size"]).number(stats.size).style(isDir ? dirStyles : emptyStyles);
-        columnsTitles.includes("CreateDate") && workSheet.cell(currentRowNumber + 1, columnTitlesMap["CreateDate"]).string(`${stats.ctime.getDay()}/${stats.ctime.getMonth()}/${stats.ctime.getFullYear()}`).style(isDir ? dirStyles : emptyStyles);
+        columnsTitles.includes("CreateDate") && workSheet.cell(currentRowNumber + 1, columnTitlesMap["CreateDate"]).string(dateToFormat(stats.ctime)).style(isDir ? dirStyles : emptyStyles);
 
         if (isDir) {
             columnsTitles.includes("ModifyDate") && workSheet.cell(currentRowNumber + 1, columnTitlesMap["ModifyDate"]).string(``).style(dirStyles);
@@ -169,8 +189,8 @@ function writeCell (path) {
                 })
             })
         } else {
-            columnsTitles.includes("ModifyDate") && workSheet.cell(currentRowNumber + 1, columnTitlesMap["ModifyDate"]).string(`${stats.mtime.getDay()}/${stats.mtime.getMonth()}/${stats.mtime.getFullYear()}`);
-            columnsTitles.includes("AccessDate") && workSheet.cell(currentRowNumber + 1, columnTitlesMap["AccessDate"]).string(`${stats.atime.getDay()}/${stats.atime.getMonth()}/${stats.atime.getFullYear()}`);
+            columnsTitles.includes("ModifyDate") && workSheet.cell(currentRowNumber + 1, columnTitlesMap["ModifyDate"]).string(dateToFormat(stats.mtime));
+            columnsTitles.includes("AccessDate") && workSheet.cell(currentRowNumber + 1, columnTitlesMap["AccessDate"]).string(dateToFormat(stats.atime));
             columnsTitles.includes("extensions") && workSheet.cell(currentRowNumber + 1, columnTitlesMap["extensions"]).string(nodePath.extname(path));
 
             if (stats.size > 2147483646) {
@@ -198,17 +218,17 @@ function writeWorkBook () {
     columnsTitles.includes("size") && workSheet.column(columnTitlesMap["size"]).setWidth(12);
     columnsTitles.includes("MD5") && workSheet.column(columnTitlesMap["MD5"]).setWidth(30);
     columnsTitles.includes("SHA1") && workSheet.column(columnTitlesMap["SHA1"]).setWidth(35);
-    columnsTitles.includes("ModifyDate") && workSheet.column(columnTitlesMap["ModifyDate"]).setWidth(15);
-    columnsTitles.includes("AccessDate") && workSheet.column(columnTitlesMap["AccessDate"]).setWidth(15);
-    columnsTitles.includes("CreateDate") && workSheet.column(columnTitlesMap["CreateDate"]).setWidth(15);
-    console.log(nodePath.join(homedir, "Desktop", `${fileNameTextInput.value.trim()}.xlsx`));
+    columnsTitles.includes("ModifyDate") && workSheet.column(columnTitlesMap["ModifyDate"]).setWidth(25);
+    columnsTitles.includes("AccessDate") && workSheet.column(columnTitlesMap["AccessDate"]).setWidth(25);
+    columnsTitles.includes("CreateDate") && workSheet.column(columnTitlesMap["CreateDate"]).setWidth(25);
+
     workBook.write(nodePath.join(homedir, "Desktop", `${fileNameTextInput.value.trim()}.xlsx`), (err, stats) => {
         endGenerate();
         if (err) {
             console.log(err);
         } else {
-            console.log(stats);
+            columnTitlesMap = {};
+            columnsTitles = [...initialColumnsTitles];
         }
     });
-    // console.log(nodePath.resolve('pathToScript', "../../../../Desktop/pathToFile"));
 }
